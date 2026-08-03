@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-import LeftPanel from "../components/LeftPanel";
+import LeftPanel from "../components/Login/LeftPanel";
 import { Mail, Lock, Eye } from "lucide-react";
 
 const LoginPage = ({ setUser }) => {
@@ -82,20 +82,20 @@ const LoginPage = ({ setUser }) => {
     };
 
     return (
-        <div className="min-h-screen grid lg:grid-cols-2">
+        <div className="min-h-screen grid lg:grid-cols-[5fr_4fr]">
 
             <LeftPanel />
 
             <div className="bg-[#F8F3E9] flex items-center justify-center px-10">
-                <div className="w-full max-w-md">
-                    <h1 className="text-4xl font-serif font-bold text-[#102235] mb-2">
+                <div className="w-full max-w-md mt-10">
+                    <h1 className="text-2xl font-serif font-bold text-[#102235]">
                         Welcome back
                     </h1>
-                    <p className="text-lg text-[#6B7D99] mb-10">
+                    <p className="text-md text-[#6B7D99] mb-10">
                         Sign in to your staff account
                     </p>
                     <form onSubmit={handleSubmit}>
-                        <label className="block text-sm font-semibold text-[#102235] mb-3">
+                        <label className="block text-xs font-semibold text-[#102235] mb-1">
                             EMAIL ADDRESS
                         </label>
                         <div className="relative mb-6">
@@ -106,23 +106,23 @@ const LoginPage = ({ setUser }) => {
                             <input
                                 type="email"
                                 placeholder="you@grandmeridian.com"
-                                className="w-full rounded-2xl border border-[#E3DED4] bg-white py-4 pl-12 pr-4 outline-none placeholder:text-[#C5CBD5]"
+                                className="w-full rounded-2xl border border-[#E3DED4] bg-white py-3 pl-12 pr-4 outline-none placeholder:text-[#C5CBD5]"
                                 value={form.email}
                                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                             />
                         </div>
-                        <div className="flex justify-between mb-3">
-                            <label className="text-sm font-semibold text-[#102235]">
+                        <div className="flex justify-between mb-1">
+                            <label className="text-xs font-semibold text-[#102235]">
                                 PASSWORD
                             </label>
                             <button
                                 type="button"
-                                className="text-[#C48B32] text-sm"
+                                className="text-[#C48B32] text-xs"
                             >
                                 Forgot password?
                             </button>
                         </div>
-                        <div className="relative mb-7">
+                        <div className="relative mb-4">
                             <Lock
                                 className="absolute left-4 top-4 text-[#9AA8BD]"
                                 size={20}
@@ -130,7 +130,7 @@ const LoginPage = ({ setUser }) => {
                             <input
                                 type="password"
                                 placeholder="••••••••"
-                                className=" w-full rounded-2xl border border-[#E3DED4] bg-white py-4 pl-12 pr-12 outline-none placeholder:text-[#C5CBD5]"
+                                className=" w-full rounded-2xl border border-[#E3DED4] bg-white py-3 pl-12 pr-12 outline-none placeholder:text-[#C5CBD5]"
                                 value={form.password}
                                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                             />
@@ -145,27 +145,27 @@ const LoginPage = ({ setUser }) => {
                             </p>
                         }
                         <button
-                            className=" w-full bg-[#102235] text-white py-4 rounded-2xl font-semibold text-lg hover:bg-[#1A3048] transition"
+                            className=" w-full bg-[#102235] text-white py-3 rounded-2xl font-semibold text-lg hover:bg-[#1A3048] transition"
                         >
                             Sign In
                         </button>
                     </form>
 
-                    <div className="flex items-center gap-4 my-8">
+                    <div className="flex items-center gap-4 my-6">
                         <div className="h-px bg-[#E2DDD3] flex-1"></div>
-                        <span className="text-[#8A99B0]">
+                        <span className="text-[#8A99B0] text-sm">
                             Demo accounts
                         </span>
                         <div className="h-px bg-[#E2DDD3] flex-1"></div>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                         {
                             demoAccounts.map((account, index) => (
                                 <div
                                     key={index}
                                     onClick={() => selectDemoUser(account)}
-                                    className={`flex items-center justify-between bg-white border rounded-2xl p-4 cursor-pointer hover:border-[#D9A441] ${index === 1 ? "border-[#D9A441]" : "border-[#E3DED4]"} `}
+                                    className={`flex items-center justify-between bg-white border rounded-2xl p-3 cursor-pointer hover:border-[#D9A441] ${index === 1 ? "border-[#D9A441]" : "border-[#E3DED4]"} `}
                                 >
                                     <div className="flex items-center gap-4">
                                         <div
@@ -177,7 +177,7 @@ const LoginPage = ({ setUser }) => {
                                             <h3 className="font-semibold text-[#102235]">
                                                 {account.name}
                                             </h3>
-                                            <p className="text-sm text-[#8494AE]">
+                                            <p className="text-xs text-[#8494AE]">
                                                 {account.email}
                                             </p>
                                         </div>
@@ -191,7 +191,7 @@ const LoginPage = ({ setUser }) => {
                             ))
                         }
                     </div>
-                    <p className="text-center mt-10 text-[#8291AA]">
+                    <p className="text-center mt-8 mb-10 text-[#8291AA]">
                         The Grand Meridian © 2026 — Staff Portal
                     </p>
                 </div>
