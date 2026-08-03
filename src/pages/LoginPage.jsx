@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import LeftPanel from "../components/Login/LeftPanel";
-import { Mail, Lock, Eye } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 const LoginPage = ({ setUser }) => {
     const [form, setForm] = useState({
@@ -10,6 +10,7 @@ const LoginPage = ({ setUser }) => {
     })
 
     const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const demoAccounts = [
@@ -68,7 +69,7 @@ const LoginPage = ({ setUser }) => {
             setUser(user);
             navigate("/");
         } else {
-            setError("Invalid Credentials");
+            setError("Invalid email or password. Try a demo account below.");
         }
     }
 
@@ -128,16 +129,20 @@ const LoginPage = ({ setUser }) => {
                                 size={20}
                             />
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
                                 placeholder="••••••••"
-                                className=" w-full rounded-2xl border border-[#E3DED4] bg-white py-3 pl-12 pr-12 outline-none placeholder:text-[#C5CBD5]"
+                                className="w-full rounded-2xl border border-[#E3DED4] bg-white py-4 pl-12 pr-12 outline-none placeholder:text-[#C5CBD5]"
                                 value={form.password}
                                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                             />
-                            <Eye
-                                className="absolute right-4 top-4 text-[#9AA8BD]"
-                                size={20}
-                            />
+
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9AA8BD] hover:text-[#102235] transition"
+                            >
+                                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                            </button>
                         </div>
                         {error &&
                             <p className="text-red-500 mb-4">
