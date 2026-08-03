@@ -1,7 +1,7 @@
-// import axios from "axios";
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
-
+import LeftPanel from "../components/LeftPanel";
+import { Mail, Lock, Eye } from "lucide-react";
 
 const LoginPage = ({ setUser }) => {
     const [form, setForm] = useState({
@@ -12,15 +12,50 @@ const LoginPage = ({ setUser }) => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    const demoAccounts = [
+        {
+            name: "Sana Kaur",
+            email: "admin@grandmeridian.com",
+            role: "Admin",
+            initials: "SK",
+            password: "12345",
+        },
+        {
+            name: "Isabelle Durant",
+            email: "manager@grandmeridian.com",
+            role: "Manager",
+            initials: "ID",
+            password: "12345",
+        },
+        {
+            name: "Marcus Webb",
+            email: "reception@grandmeridian.com",
+            role: "Receptionist",
+            initials: "MW",
+            password: "12345",
+        },
+    ];
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // try {
-        //     const res = await axios.post("http://localhost:5000/api/auth/login", form);
-        //     setUser(res.data);
-        //     navigate("/");
-        // } catch (err) {
-        //     setError("Invalid Credentials");
-        // }
+        const demoUser = demoAccounts.find(
+            (account) =>
+                account.email === form.email &&
+                account.password === form.password
+        );
+
+        if (demoUser) {
+            const user = {
+                name: demoUser.name,
+                email: demoUser.email,
+                role: demoUser.role,
+            };
+
+            setUser(user);
+            navigate("/");
+            return;
+        }
+
         if (
             form.email === "harindi@gmail.com" &&
             form.password === "12345"
@@ -37,34 +72,134 @@ const LoginPage = ({ setUser }) => {
         }
     }
 
+    const selectDemoUser = (account) => {
+        setForm({
+            email: account.email,
+            password: account.password,
+        });
+
+        setError("");
+    };
+
     return (
-        <div className="min-h-[80vh] flex items-center justify-center p-4">
-            <form
-                className="bg-white p-6 rounded shadow-md w-full max-w-lg"
-                onSubmit={handleSubmit}
-            >
-                <h2 className="text-2xl mb-6 font-bold text-center text-gray-800">
-                    Login
-                </h2>
-                {error && <p className="text-red-500 mb-4">{error}</p>}
-                <input
-                    type="email"
-                    placeholder="email"
-                    className="border p-2 w-full mb-3"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-                <input
-                    type="password"
-                    placeholder="password"
-                    className="border p-2 w-full mb-3"
-                    value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                />
-                <button className="bg-blue-500 text-white p-2 w-full">Login</button>
-            </form>
+        <div className="min-h-screen grid lg:grid-cols-2">
+
+            <LeftPanel />
+
+            <div className="bg-[#F8F3E9] flex items-center justify-center px-10">
+                <div className="w-full max-w-md">
+                    <h1 className="text-4xl font-serif font-bold text-[#102235] mb-2">
+                        Welcome back
+                    </h1>
+                    <p className="text-lg text-[#6B7D99] mb-10">
+                        Sign in to your staff account
+                    </p>
+                    <form onSubmit={handleSubmit}>
+                        <label className="block text-sm font-semibold text-[#102235] mb-3">
+                            EMAIL ADDRESS
+                        </label>
+                        <div className="relative mb-6">
+                            <Mail
+                                className="absolute left-4 top-4 text-[#9AA8BD]"
+                                size={20}
+                            />
+                            <input
+                                type="email"
+                                placeholder="you@grandmeridian.com"
+                                className="w-full rounded-2xl border border-[#E3DED4] bg-white py-4 pl-12 pr-4 outline-none placeholder:text-[#C5CBD5]"
+                                value={form.email}
+                                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                            />
+                        </div>
+                        <div className="flex justify-between mb-3">
+                            <label className="text-sm font-semibold text-[#102235]">
+                                PASSWORD
+                            </label>
+                            <button
+                                type="button"
+                                className="text-[#C48B32] text-sm"
+                            >
+                                Forgot password?
+                            </button>
+                        </div>
+                        <div className="relative mb-7">
+                            <Lock
+                                className="absolute left-4 top-4 text-[#9AA8BD]"
+                                size={20}
+                            />
+                            <input
+                                type="password"
+                                placeholder="••••••••"
+                                className=" w-full rounded-2xl border border-[#E3DED4] bg-white py-4 pl-12 pr-12 outline-none placeholder:text-[#C5CBD5]"
+                                value={form.password}
+                                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                            />
+                            <Eye
+                                className="absolute right-4 top-4 text-[#9AA8BD]"
+                                size={20}
+                            />
+                        </div>
+                        {error &&
+                            <p className="text-red-500 mb-4">
+                                {error}
+                            </p>
+                        }
+                        <button
+                            className=" w-full bg-[#102235] text-white py-4 rounded-2xl font-semibold text-lg hover:bg-[#1A3048] transition"
+                        >
+                            Sign In
+                        </button>
+                    </form>
+
+                    <div className="flex items-center gap-4 my-8">
+                        <div className="h-px bg-[#E2DDD3] flex-1"></div>
+                        <span className="text-[#8A99B0]">
+                            Demo accounts
+                        </span>
+                        <div className="h-px bg-[#E2DDD3] flex-1"></div>
+                    </div>
+
+                    <div className="space-y-3">
+                        {
+                            demoAccounts.map((account, index) => (
+                                <div
+                                    key={index}
+                                    onClick={() => selectDemoUser(account)}
+                                    className={`flex items-center justify-between bg-white border rounded-2xl p-4 cursor-pointer hover:border-[#D9A441] ${index === 1 ? "border-[#D9A441]" : "border-[#E3DED4]"} `}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div
+                                            className="w-10 h-10 rounded-full bg-[#102235] text-white flex items-center justify-center font-bold "
+                                        >
+                                            {account.initials}
+                                        </div>
+                                        <div>
+                                            <h3 className="font-semibold text-[#102235]">
+                                                {account.name}
+                                            </h3>
+                                            <p className="text-sm text-[#8494AE]">
+                                                {account.email}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <span
+                                        className=" bg-[#F8F1E4] text-[#C48B32] px-4 py-1 rounded-full text-sm "
+                                    >
+                                        {account.role}
+                                    </span>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    <p className="text-center mt-10 text-[#8291AA]">
+                        The Grand Meridian © 2026 — Staff Portal
+                    </p>
+                </div>
+            </div>
         </div>
-    )
+    );
 }
 
 export default LoginPage
+
+
