@@ -1,20 +1,42 @@
-import { useEffect, useState } from "react"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/LoginPage.jsx"
+import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import AuthPage from "./pages/authentication/AuthPage";
 
 function App() {
-
   const [user, setUser] = useState(null);
 
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/login" element={<LoginPage setUser={setUser} />} />
-        </Routes>
-      </Router>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+
+        {/* Login */}
+        <Route
+          path="/login"
+          element={<AuthPage setUser={setUser} />}
+        />
+
+        {/* Registration */}
+        <Route
+          path="/register"
+          element={<AuthPage setUser={setUser} />}
+        />
+
+        {/* Default route */}
+        <Route
+          path="/"
+          element={
+            user ? (
+              <div>Dashboard</div>
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
